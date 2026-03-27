@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Limuru Dairy Company — Milk from the highlands</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;1,6..72,500&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy: #14385c;
+    --blue: #1f6fb2;
+    --blue-light: #eaf3fb;
+    --white: #ffffff;
+    --milk: #fbfdff;
+    --gold: #d9a63e;
+    --ink: #16283a;
+    --ink-soft: #55708a;
+    --line: rgba(20,56,92,0.14);
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Work Sans', sans-serif;
+    background: var(--white);
+    color: var(--ink);
+    line-height:1.5;
+  }
+  h1,h2,h3{ font-family:'Newsreader', serif; font-weight:600; color: var(--navy); }
+  a{ color:inherit; text-decoration:none; }
+  img,svg{ display:block; max-width:100%; }
+  .wrap{ max-width:1140px; margin:0 auto; padding:0 32px; }
+  section{ padding: 96px 0; }
+  .eyebrow{
+    font-size:12px; letter-spacing:.16em; text-transform:uppercase;
+    color: var(--blue); font-weight:600; margin-bottom:14px;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 18px 32px; max-width:1140px; margin:0 auto;
+  }
+  .brand{ display:flex; align-items:center; gap:10px; }
+  .brand-mark{ width:32px; height:32px; }
+  .brand-name{ font-family:'Newsreader', serif; font-weight:600; font-size:19px; color: var(--navy); }
+  .nav-links{ display:flex; gap:32px; font-size:14px; font-weight:500; }
+  .nav-links a{ color: var(--ink-soft); transition: color .2s; }
+  .nav-links a:hover{ color: var(--blue); }
+  .nav-cta{
+    background: var(--navy); color: var(--white);
+    padding:10px 20px; border-radius:2px; font-size:13.5px; font-weight:600;
+    transition: background .2s;
+  }
+  .nav-cta:hover{ background: var(--blue); }
+  @media (max-width:760px){ .nav-links{ display:none; } }
+
+  .nav-right{ display:flex; align-items:center; gap:10px; }
+  .more-menu{ position:relative; }
+  .more-btn{
+    width:38px; height:38px; border-radius:50%; border:1px solid var(--line);
+    background: var(--white); display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition: background .2s, border-color .2s;
+  }
+  .more-btn:hover{ background: var(--blue-light); border-color: var(--blue); }
+  .more-btn:focus-visible{ outline:2px solid var(--blue); outline-offset:2px; }
+  .more-dropdown{
+    position:absolute; top:calc(100% + 10px); right:0;
+    background: var(--white); border:1px solid var(--line); border-radius:8px;
+    box-shadow: 0 18px 40px rgba(20,56,92,0.16);
+    min-width: 240px; padding:8px;
+    opacity:0; visibility:hidden; transform: translateY(-6px);
+    transition: opacity .18s ease, transform .18s ease, visibility .18s;
+    z-index:60;
+  }
+  .more-dropdown.open{ opacity:1; visibility:visible; transform:translateY(0); }
+  .more-dropdown a{
+    display:flex; align-items:center; gap:10px;
+    padding:11px 12px; border-radius:5px; font-size:13.5px; font-weight:500; color: var(--ink);
+    transition: background .15s;
+  }
+  .more-dropdown a:hover{ background: var(--blue-light); color: var(--navy); }
+  .more-dropdown a svg{ flex-shrink:0; }
+  @media (max-width:760px){ .nav-cta{ display:none; } }
+
+  /* ---------- HERO ---------- */
+  .hero-section{
+    background: linear-gradient(180deg, var(--navy) 0%, var(--blue) 42%, var(--blue-light) 100%);
+  }
+  .hero{
+    display:grid; grid-template-columns: 1.05fr .95fr; gap:56px; align-items:center;
+    padding-top: 72px; padding-bottom: 40px;
+  }
+  .hero h1{ font-size: 52px; line-height:1.08; margin-bottom:22px; color: var(--white); }
+  .hero h1 em{ font-style:italic; color: var(--gold); }
+  .hero p.lead{ font-size:17px; color: rgba(255,255,255,0.82); max-width: 420px; margin-bottom:34px; }
+  .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn{
+    display:inline-block; padding:14px 26px; border-radius:2px; font-size:14px; font-weight:600;
+    cursor:pointer; border:1px solid transparent; transition: all .2s;
+  }
+  .btn-primary{ background: var(--gold); color: var(--navy); }
+  .btn-primary:hover{ background: #e8b656; }
+  .btn-ghost{ border-color: rgba(255,255,255,0.6); color: var(--white); }
+  .btn-ghost:hover{ background: rgba(255,255,255,0.12); }
+
+  .hero-art svg{ width:100%; height:auto; }
+
+  /* ---------- USP STRIP ---------- */
+  .usp{ background: var(--blue-light); }
+  .usp .wrap{
+    display:grid; grid-template-columns: repeat(4,1fr); gap:0;
+    padding:0 32px;
+  }
+  .usp-item{
+    padding: 34px 20px;
+    border-left: 1px solid var(--line);
+    text-align:center;
+  }
+  .usp-item:first-child{ border-left:none; }
+  .usp-item svg{ width:28px; height:28px; margin:0 auto 12px; }
+  .usp-item .label{ font-size:13px; font-weight:600; letter-spacing:.02em; color:var(--navy); }
+  .usp-item .sub{ font-size:12px; color: var(--ink-soft); margin-top:4px; }
+  @media (max-width:760px){ .usp .wrap{ grid-template-columns: repeat(2,1fr);} .usp-item{ border-left:none; border-top:1px solid var(--line);} }
+
+  /* ---------- PRODUCTS ---------- */
+  .products-head{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:48px; flex-wrap:wrap; gap:16px; }
+  .products-head h2{ font-size:36px; }
+  .products-head p{ color:var(--ink-soft); max-width:360px; font-size:14.5px; }
+  .product-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap:24px; }
+  .product-card{
+    background: var(--white); border:1px solid var(--line); border-radius:6px;
+    padding: 28px 22px; transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .product-card:hover{ transform: translateY(-4px); box-shadow: 0 16px 34px rgba(20,56,92,0.12); }
+  .product-card svg{ width:54px; height:54px; margin-bottom:18px; }
+  .product-card h3{ font-size:18px; margin-bottom:6px; }
+  .product-card p{ font-size:13px; color: var(--ink-soft); }
+  @media (max-width:900px){ .product-grid{ grid-template-columns: repeat(2,1fr);} }
+
+  /* ---------- STORY ---------- */
+  .story{ background: var(--blue-light); }
+  .story .wrap{ display:grid; grid-template-columns: .95fr 1.05fr; gap:64px; align-items:center; }
+  .story-art svg{ width:100%; }
+  .story h2{ font-size:34px; margin-bottom:20px; }
+  .story p{ color: var(--ink-soft); font-size:15px; margin-bottom:16px; max-width:460px; }
+  .quote{
+    margin-top:28px; padding-left:20px; border-left:3px solid var(--gold);
+    font-family:'Newsreader', serif; font-style:italic; font-size:17px; color: var(--navy);
+  }
+  .quote span{ display:block; margin-top:10px; font-family:'Work Sans',sans-serif; font-style:normal; font-size:13px; color: var(--ink-soft); }
+  @media (max-width:860px){ .story .wrap{ grid-template-columns:1fr; } .story-art{ order:-1; } }
+
+  /* ---------- CTA BAND ---------- */
+  .cta-band{
+    background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+    color: var(--white); text-align:center;
+  }
+  .cta-band h2{ color: var(--white); font-size:32px; margin-bottom:14px; }
+  .cta-band p{ color: rgba(255,255,255,0.75); max-width:420px; margin: 0 auto 30px; font-size:15px; }
+  .cta-band .btn-primary{ background: var(--gold); color: var(--navy); }
+  .cta-band .btn-primary:hover{ background:#e8b656; }
+
+  /* ---------- FOOTER ---------- */
+  footer{ background: var(--white); border-top:1px solid var(--line); padding: 56px 0 30px; }
+  .foot-grid{ display:grid; grid-template-columns: 1.3fr 1fr 1fr 1.3fr; gap:40px; margin-bottom:44px; }
+  .foot-brand .brand{ margin-bottom:12px; }
+  .foot-brand p{ font-size:13px; color:var(--ink-soft); max-width:220px; }
+  footer h4{ font-size:12.5px; text-transform:uppercase; letter-spacing:.1em; color: var(--navy); margin-bottom:14px; }
+  footer ul{ list-style:none; }
+  footer li{ margin-bottom:9px; font-size:13.5px; }
+  footer a{ color: var(--ink-soft); transition:color .2s; }
+  footer a:hover{ color: var(--blue); }
+  .foot-form{ display:flex; gap:8px; margin-top:6px; }
+  .foot-form input{
+    flex:1; border:1px solid var(--line); background:var(--blue-light); padding:10px 12px; font-size:13px; border-radius:2px; outline:none;
+  }
+  .foot-form input:focus{ border-color: var(--blue); }
+  .foot-form button{
+    background: var(--navy); color:var(--white); border:none; padding:10px 16px; font-size:13px; font-weight:600; border-radius:2px; cursor:pointer;
+  }
+  .foot-form button:hover{ background: var(--blue); }
+  .foot-bottom{
+    border-top:1px solid var(--line); padding-top:22px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    font-size:12px; color: var(--ink-soft);
+  }
+  @media (max-width:800px){ .foot-grid{ grid-template-columns: 1fr 1fr; } }
+  @media (max-width:600px){ .hero{ grid-template-columns:1fr; } .hero-art{ order:-1; } }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 40 40" fill="none">
+        <path d="M13 6h14l3 8-3 6v14a3 3 0 01-3 3H16a3 3 0 01-3-3V20l-3-6 3-8z" fill="#14385c"/>
+        <path d="M13 20c3.5 2 10.5 2 14 0v10a3 3 0 01-3 3H16a3 3 0 01-3-3V20z" fill="#ffffff"/>
+        <path d="M20 6l-4 8h8l-4-8z" fill="#d9a63e"/>
+      </svg>
+      <span class="brand-name">Limuru Dairy Co.</span>
+    </div>
+    <div class="nav-links">
+      <a href="#products">Products</a>
+      <a href="#story">Our Farms</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="nav-right">
+      <a href="#contact" class="nav-cta">Find a Stockist</a>
+      <div class="more-menu">
+        <button class="more-btn" id="moreBtn" aria-haspopup="true" aria-expanded="false" aria-label="More options">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><circle cx="12" cy="5" r="1.8" fill="#14385c"/><circle cx="12" cy="12" r="1.8" fill="#14385c"/><circle cx="12" cy="19" r="1.8" fill="#14385c"/></svg>
+        </button>
+        <div class="more-dropdown" id="moreDropdown">
+          <a href="#appointment"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#1f6fb2" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>Book an Appointment</a>
+          <a href="#careers"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#1f6fb2" stroke-width="1.8"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2" stroke-linecap="round"/></svg>Careers &amp; Opportunities</a>
+          <a href="#chat"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#1f6fb2" stroke-width="1.8"><path d="M21 11.5a8.5 8.5 0 01-8.5 8.5H4l2.5-3.5A8.5 8.5 0 1121 11.5z" stroke-linecap="round" stroke-linejoin="round"/></svg>Chat With Us</a>
+          <a href="#help"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#1f6fb2" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 015 0c0 1.7-2.5 2-2.5 4" stroke-linecap="round"/><circle cx="12" cy="17" r="0.6" fill="#1f6fb2"/></svg>Help</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<section class="hero-section">
+  <div class="wrap hero">
+    <div>
+      <p class="eyebrow" style="color:#8fc3ec;">Est. in the Limuru highlands</p>
+      <h1>Milk, boxed <em>fresh</em><br>from cooler ground.</h1>
+      <p class="lead">Chilled within the hour of milking, at 2,200m above sea level. No additives, no shortcuts — just small-batch dairy from family farms around Limuru.</p>
+      <div class="hero-actions">
+        <a href="#products" class="btn btn-primary">Explore Products</a>
+        <a href="#story" class="btn btn-ghost">Our Story</a>
+      </div>
+    </div>
+
+    <div class="hero-art">
+      <svg viewBox="0 0 440 420" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="220" cy="395" rx="160" ry="16" fill="#062338" opacity="0.18"/>
+
+        <!-- back carton -->
+        <g transform="translate(60,60) rotate(-6)">
+          <path d="M0 40 L40 0 L100 0 L140 40 V220 H0 Z" fill="#ffffff" stroke="#14385c" stroke-width="2.5"/>
+          <path d="M0 40 L70 70 L140 40" fill="none" stroke="#14385c" stroke-width="2.5"/>
+          <path d="M70 70 V220" stroke="#14385c" stroke-width="1.5" opacity="0.3"/>
+          <rect x="16" y="100" width="108" height="56" fill="#1f6fb2"/>
+          <text x="70" y="134" font-family="Newsreader, serif" font-size="15" fill="#ffffff" text-anchor="middle" font-style="italic">Limuru</text>
+        </g>
+
+        <!-- front carton -->
+        <g transform="translate(190,110)">
+          <path d="M0 46 L46 0 L114 0 L160 46 V260 H0 Z" fill="#ffffff" stroke="#14385c" stroke-width="3"/>
+          <path d="M0 46 L80 80 L160 46" fill="none" stroke="#14385c" stroke-width="3"/>
+          <path d="M80 80 V260" stroke="#14385c" stroke-width="1.5" opacity="0.25"/>
+          <rect x="16" y="115" width="128" height="66" fill="#14385c"/>
+          <text x="80" y="150" font-family="Newsreader, serif" font-weight="600" font-size="17" fill="#ffffff" text-anchor="middle" font-style="italic">Limuru</text>
+          <text x="80" y="169" font-family="'Work Sans', sans-serif" font-size="9.5" letter-spacing="2" fill="#d9a63e" text-anchor="middle">FRESH MILK</text>
+          <rect x="16" y="200" width="128" height="3" fill="#eaf3fb"/>
+        </g>
+
+        <!-- pour splash from front carton spout -->
+        <path d="M240 108 C244 130 236 150 244 170" stroke="#ffffff" stroke-width="10" stroke-linecap="round" fill="none" opacity="0.9"/>
+        <circle cx="252" cy="176" r="6" fill="#ffffff"/>
+        <circle cx="268" cy="160" r="4" fill="#ffffff"/>
+
+        <!-- small carton -->
+        <g transform="translate(300,220) scale(0.62) rotate(8)">
+          <path d="M0 40 L40 0 L100 0 L140 40 V220 H0 Z" fill="#eaf3fb" stroke="#14385c" stroke-width="3"/>
+          <path d="M0 40 L70 70 L140 40" fill="none" stroke="#14385c" stroke-width="3"/>
+          <rect x="16" y="100" width="108" height="50" fill="#d9a63e"/>
+          <text x="70" y="132" font-family="Newsreader, serif" font-size="15" fill="#14385c" text-anchor="middle" font-style="italic">Yoghurt</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="usp">
+  <div class="wrap">
+    <div class="usp-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#1f6fb2" stroke-width="1.6"><path d="M12 2v20M4 12h16" stroke-linecap="round"/><circle cx="12" cy="12" r="9"/></svg>
+      <div class="label">Chilled within the hour</div>
+      <div class="sub">Farm to cold-chain, same morning</div>
+    </div>
+    <div class="usp-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#1f6fb2" stroke-width="1.6"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="label">Zero additives</div>
+      <div class="sub">Just milk, nothing else</div>
+    </div>
+    <div class="usp-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#1f6fb2" stroke-width="1.6"><path d="M3 21h18M5 21V9l7-6 7 6v12M9 21v-6h6v6"/></svg>
+      <div class="label">18 family farms</div>
+      <div class="sub">Around the Limuru highlands</div>
+    </div>
+    <div class="usp-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#1f6fb2" stroke-width="1.6"><path d="M12 2C8 6 6 10 6 14a6 6 0 0012 0c0-4-2-8-6-12z"/></svg>
+      <div class="label">2,200m altitude</div>
+      <div class="sub">Cooler grass, richer milk</div>
+    </div>
+  </div>
+</div>
+
+<section id="products">
+  <div class="wrap">
+    <div class="products-head">
+      <div>
+        <p class="eyebrow">What we make</p>
+        <h2>Small batch, every day</h2>
+      </div>
+      <p>Everything is processed within our own facility, in quantities small enough to sell out weekly.</p>
+    </div>
+
+    <div class="product-grid">
+      <div class="product-card">
+        <svg viewBox="0 0 54 54" fill="none">
+          <path d="M12 14 L27 4 L42 14 V48 H12 Z" fill="#ffffff" stroke="#14385c" stroke-width="2.5"/>
+          <path d="M12 14 L27 22 L42 14" fill="none" stroke="#14385c" stroke-width="2.5"/>
+          <rect x="17" y="30" width="20" height="12" fill="#1f6fb2"/>
+        </svg>
+        <h3>Fresh Milk</h3>
+        <p>Pasteurized whole milk, boxed the same day it's collected.</p>
+      </div>
+      <div class="product-card">
+        <svg viewBox="0 0 54 54" fill="none">
+          <path d="M12 14 L27 4 L42 14 V48 H12 Z" fill="#eaf3fb" stroke="#14385c" stroke-width="2.5"/>
+          <path d="M12 14 L27 22 L42 14" fill="none" stroke="#14385c" stroke-width="2.5"/>
+          <rect x="17" y="30" width="20" height="12" fill="#d9a63e"/>
+        </svg>
+        <h3>Natural Yoghurt</h3>
+        <p>Cultured slow, with nothing added but live culture.</p>
+      </div>
+      <div class="product-card">
+        <svg viewBox="0 0 54 54" fill="none">
+          <rect x="14" y="12" width="26" height="32" rx="3" fill="#ffffff" stroke="#14385c" stroke-width="2.5"/>
+          <rect x="18" y="8" width="18" height="8" rx="2" fill="#1f6fb2"/>
+          <rect x="18" y="24" width="18" height="14" fill="#d9a63e"/>
+        </svg>
+        <h3>Ghee</h3>
+        <p>Slow-clarified butterfat, jarred by hand in small runs.</p>
+      </div>
+      <div class="product-card">
+        <svg viewBox="0 0 54 54" fill="none">
+          <path d="M16 10 L38 10 L36 46 A9 9 0 0118 46 Z" fill="#ffffff" stroke="#14385c" stroke-width="2.5"/>
+          <rect x="18.5" y="24" width="17" height="10" fill="#1f6fb2"/>
+        </svg>
+        <h3>Fresh Cream</h3>
+        <p>Skimmed at the farm, thick enough to hold a spoon upright.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="story" id="story">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Our farms</p>
+      <h2>Highland ground makes different milk</h2>
+      <p>Limuru sits over 2,200 metres up, where cool nights and volcanic soil grow grass most lowland herds never taste. Our eighteen partner farms are all within a 20-kilometre radius of our dairy — close enough that milk is chilled before it's even left the parish.</p>
+      <p>We've kept the same route since 1994: collect at dawn, chill by seven, box by nine. No powder, no imports, no long-life shortcuts.</p>
+      <div class="quote">
+        "You can taste the season in it — grass in April, something greener by July."
+        <span>— Mama Wanjiru, dairy farmer, Tigoni</span>
+      </div>
+    </div>
+
+    <div class="story-art">
+      <svg viewBox="0 0 420 340" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="220" width="420" height="120" fill="#eaf3fb"/>
+        <path d="M0 220 Q100 190 210 215 T420 210 V340 H0 Z" fill="#1f6fb2"/>
+        <path d="M0 235 Q120 205 210 228 T420 224 V340 H0 Z" fill="#14385c"/>
+        <circle cx="330" cy="70" r="40" fill="#d9a63e"/>
+        <!-- stacked crates of cartons -->
+        <g transform="translate(60,230)">
+          <rect x="0" y="0" width="34" height="46" rx="2" fill="#ffffff" stroke="#14385c" stroke-width="2"/>
+          <rect x="4" y="18" width="26" height="12" fill="#1f6fb2"/>
+          <rect x="40" y="0" width="34" height="46" rx="2" fill="#ffffff" stroke="#14385c" stroke-width="2"/>
+          <rect x="44" y="18" width="26" height="12" fill="#d9a63e"/>
+          <rect x="80" y="0" width="34" height="46" rx="2" fill="#ffffff" stroke="#14385c" stroke-width="2"/>
+          <rect x="84" y="18" width="26" height="12" fill="#1f6fb2"/>
+        </g>
+        <path d="M60 220 Q140 195 200 218 Q260 240 340 205" stroke="#d9a63e" stroke-width="2" fill="none" opacity="0.6" stroke-dasharray="4 6"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <h2>Find Limuru Dairy near you</h2>
+    <p>Stocked in over 60 shops and markets across Kiambu and Nairobi County.</p>
+    <a href="#contact" class="btn btn-primary">See Stockists</a>
+  </div>
+</section>
+
+<section id="appointment" style="background:var(--blue-light);">
+  <div class="wrap" style="max-width:640px; text-align:center;">
+    <p class="eyebrow">Visit us</p>
+    <h2 style="font-size:32px; margin-bottom:14px;">Book an Appointment</h2>
+    <p style="color:var(--ink-soft); font-size:15px; margin-bottom:30px;">Touring the dairy, arranging bulk supply, or meeting our farm team — pick a time that works and we'll confirm within a day.</p>
+    <a href="mailto:hello@limurudairy.co.ke?subject=Appointment%20Request" class="btn btn-primary" style="background:var(--navy); color:var(--white);">Request a Time</a>
+  </div>
+</section>
+
+<section id="careers">
+  <div class="wrap" style="max-width:640px; text-align:center;">
+    <p class="eyebrow">Join the team</p>
+    <h2 style="font-size:32px; margin-bottom:14px;">Careers &amp; Opportunities</h2>
+    <p style="color:var(--ink-soft); font-size:15px; margin-bottom:30px;">We're always looking for people who care about good milk — from our collection routes to the bottling line. Openings are posted here as they come up.</p>
+    <a href="mailto:careers@limurudairy.co.ke" class="btn btn-ghost" style="border-color:var(--navy); color:var(--navy);">See Open Roles</a>
+  </div>
+</section>
+
+<section id="chat" style="background:var(--blue-light);">
+  <div class="wrap" style="max-width:640px; text-align:center;">
+    <p class="eyebrow">We're here</p>
+    <h2 style="font-size:32px; margin-bottom:14px;">Chat With Us</h2>
+    <p style="color:var(--ink-soft); font-size:15px; margin-bottom:30px;">Questions about an order, a stockist near you, or anything else — message us and a real person will reply.</p>
+    <a href="#" class="btn btn-primary" style="background:var(--navy); color:var(--white);">Start a Chat</a>
+  </div>
+</section>
+
+<section id="help">
+  <div class="wrap" style="max-width:640px; text-align:center;">
+    <p class="eyebrow">Support</p>
+    <h2 style="font-size:32px; margin-bottom:14px;">Help</h2>
+    <p style="color:var(--ink-soft); font-size:15px; margin-bottom:30px;">Look up delivery areas, storage tips, or how to report an issue with an order.</p>
+    <a href="mailto:support@limurudairy.co.ke" class="btn btn-ghost" style="border-color:var(--navy); color:var(--navy);">Get Support</a>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="brand">
+          <svg class="brand-mark" viewBox="0 0 40 40" fill="none">
+            <path d="M13 6h14l3 8-3 6v14a3 3 0 01-3 3H16a3 3 0 01-3-3V20l-3-6 3-8z" fill="#14385c"/>
+            <path d="M13 20c3.5 2 10.5 2 14 0v10a3 3 0 01-3 3H16a3 3 0 01-3-3V20z" fill="#ffffff"/>
+            <path d="M20 6l-4 8h8l-4-8z" fill="#d9a63e"/>
+          </svg>
+          <span class="brand-name">Limuru Dairy Co.</span>
+        </div>
+        <p>Family-farmed dairy from the highlands around Limuru, Kiambu County.</p>
+      </div>
+      <div>
+        <h4>Products</h4>
+        <ul>
+          <li><a href="#products">Fresh Milk</a></li>
+          <li><a href="#products">Yoghurt</a></li>
+          <li><a href="#products">Ghee</a></li>
+          <li><a href="#products">Cream</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#story">Our Farms</a></li>
+          <li><a href="#">Stockists</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Stay in the loop</h4>
+        <p style="font-size:13px;color:var(--ink-soft);margin-bottom:10px;">New products and stockist updates, occasionally.</p>
+        <form class="foot-form" onsubmit="event.preventDefault(); this.querySelector('input').value=''; alert('Thanks — you\'re on the list.');">
+          <input type="email" placeholder="you@example.com" required>
+          <button type="submit">Join</button>
+        </form>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Limuru Dairy Company. All rights reserved.</span>
+      <span>Limuru, Kiambu County, Kenya</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const moreBtn = document.getElementById('moreBtn');
+  const moreDropdown = document.getElementById('moreDropdown');
+
+  function closeMenu(){
+    moreDropdown.classList.remove('open');
+    moreBtn.setAttribute('aria-expanded','false');
+  }
+
+  moreBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    const isOpen = moreDropdown.classList.toggle('open');
+    moreBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+
+  document.addEventListener('click', function(e){
+    if(!moreDropdown.contains(e.target) && e.target !== moreBtn){
+      closeMenu();
+    }
+  });
+
+  moreDropdown.querySelectorAll('a').forEach(a=>{
+    a.addEventListener('click', closeMenu);
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeMenu();
+  });
+</script>
+
+</body>
+</html>
